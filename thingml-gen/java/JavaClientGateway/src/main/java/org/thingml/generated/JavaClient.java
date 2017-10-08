@@ -20,6 +20,12 @@ import java.util.*;
  **/
 public class JavaClient extends Component implements IJavaClient_sensor {
 
+
+	// START: @java_features annotation
+org.thingml.pressuresensor.ui.MainFrame ui;
+
+	// END: @java_features annotation
+
 private boolean debug = false;
 public boolean isDebug() {return debug;}
 public void setDebug(boolean debug) {this.debug = debug;}
@@ -57,18 +63,25 @@ return sensor_port;
 }
 private CompositeState buildJavaClient_SC(){
 final AtomicState state_JavaClient_SC_READY = new AtomicState("READY");
-Handler h297645615 = new Handler();
-h297645615.from(state_JavaClient_SC_READY);
-h297645615.event(pressureType);
-h297645615.port(sensor_port);
-h297645615.action((Event e)->{
+Handler h1474887301 = new Handler();
+h1474887301.from(state_JavaClient_SC_READY);
+h1474887301.event(pressureType);
+h1474887301.port(sensor_port);
+h1474887301.action((Event e)->{
 final PressureMessageType.PressureMessage pressure = (PressureMessageType.PressureMessage) e;
 System.out.print("Pressure A=" + pressure.a + " B=" + pressure.b + "\n");
+ui.insertData(pressure.a, pressure.b, pressure.b - pressure.a);
 });
 
 final CompositeState state_JavaClient_SC = new CompositeState("SC");
 state_JavaClient_SC.onEntry(()->{
 System.out.print("Java Client Ready. Waiting for sensor data...");
+ui = new org.thingml.pressuresensor.ui.MainFrame();
+java.awt.EventQueue.invokeLater(new Runnable() {
+            	public void run() {
+                	ui.setVisible(true);
+            	}
+        	});
 });
 state_JavaClient_SC.add(state_JavaClient_SC_READY);
 state_JavaClient_SC.initial(state_JavaClient_SC_READY);

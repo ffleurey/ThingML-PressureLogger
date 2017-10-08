@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="ASCII"?>
 <thingML:ThingMLModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:thingML="http://www.thingml.org/xtext/ThingML">
-  <types xsi:type="thingML:Thing" name="JavaClient" includes="//@types.1">
-    <ports xsi:type="thingML:ProvidedPort" name="sensor" receives="//@types.1/@messages.0"/>
-    <behaviour name="SC" initial="//@types.0/@behaviour.0/@substate.0">
-      <entry xsi:type="thingML:PrintAction">
-        <msg xsi:type="thingML:StringLiteral" stringValue="Java Client Ready. Waiting for sensor data..."/>
+  <types xsi:type="thingML:ObjectType" name="MainFrame"/>
+  <types xsi:type="thingML:Thing" name="JavaClient" includes="//@types.2">
+    <annotations name="maven_dep" value="&lt;dependency>&#xA;&#x9;&lt;groupId>org.thingml&lt;/groupId>&#xA;&#x9;&lt;artifactId>pressure-sensor-ui&lt;/artifactId>&#xA;&#x9;&lt;version>1.0-SNAPSHOT&lt;/version>&#xA;&lt;/dependency>"/>
+    <annotations name="java_features" value="org.thingml.pressuresensor.ui.MainFrame ui;"/>
+    <ports xsi:type="thingML:ProvidedPort" name="sensor" receives="//@types.2/@messages.0"/>
+    <behaviour name="SC" initial="//@types.1/@behaviour.0/@substate.0">
+      <entry xsi:type="thingML:ActionBlock">
+        <actions xsi:type="thingML:PrintAction">
+          <msg xsi:type="thingML:StringLiteral" stringValue="Java Client Ready. Waiting for sensor data..."/>
+        </actions>
+        <actions xsi:type="thingML:ExternStatement" statement="ui = new org.thingml.pressuresensor.ui.MainFrame();"/>
+        <actions xsi:type="thingML:ExternStatement" statement="java.awt.EventQueue.invokeLater(new Runnable() {&#xA;            &#x9;public void run() {&#xA;                &#x9;ui.setVisible(true);&#xA;            &#x9;}&#xA;        &#x9;});"/>
       </entry>
       <substate name="READY">
         <internal>
-          <event xsi:type="thingML:ReceiveMessage" name="o" port="//@types.0/@ports.0" message="//@types.1/@messages.0"/>
+          <event xsi:type="thingML:ReceiveMessage" name="o" port="//@types.1/@ports.0" message="//@types.2/@messages.0"/>
           <action xsi:type="thingML:ActionBlock">
             <actions xsi:type="thingML:PrintAction">
               <msg xsi:type="thingML:PlusExpression">
@@ -16,14 +23,27 @@
                   <lhs xsi:type="thingML:PlusExpression">
                     <lhs xsi:type="thingML:PlusExpression">
                       <lhs xsi:type="thingML:StringLiteral" stringValue="Pressure A="/>
-                      <rhs xsi:type="thingML:EventReference" receiveMsg="//@types.0/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.1/@messages.0/@parameters.0"/>
+                      <rhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.0"/>
                     </lhs>
                     <rhs xsi:type="thingML:StringLiteral" stringValue=" B="/>
                   </lhs>
-                  <rhs xsi:type="thingML:EventReference" receiveMsg="//@types.0/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.1/@messages.0/@parameters.1"/>
+                  <rhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.1"/>
                 </lhs>
                 <rhs xsi:type="thingML:StringLiteral" stringValue="\n"/>
               </msg>
+            </actions>
+            <actions xsi:type="thingML:ExternStatement" statement="ui.insertData(">
+              <segments xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.0"/>
+              <segments xsi:type="thingML:ExternExpression" expression=", ">
+                <segments xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.1"/>
+                <segments xsi:type="thingML:ExternExpression" expression=", ">
+                  <segments xsi:type="thingML:MinusExpression">
+                    <lhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.1"/>
+                    <rhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.0"/>
+                  </segments>
+                  <segments xsi:type="thingML:ExternExpression" expression=");"/>
+                </segments>
+              </segments>
             </actions>
           </action>
         </internal>
@@ -34,10 +54,10 @@
     <messages name="pressure">
       <annotations name="code" value="20"/>
       <parameters name="a">
-        <typeRef type="//@types.12"/>
+        <typeRef type="//@types.13"/>
       </parameters>
       <parameters name="b">
-        <typeRef type="//@types.12"/>
+        <typeRef type="//@types.13"/>
       </parameters>
     </messages>
   </types>
@@ -45,22 +65,22 @@
     <messages name="timer_start">
       <annotations name="timer_start" value="true"/>
       <parameters name="id">
-        <typeRef type="//@types.6"/>
+        <typeRef type="//@types.7"/>
       </parameters>
       <parameters name="time">
-        <typeRef type="//@types.11"/>
+        <typeRef type="//@types.12"/>
       </parameters>
     </messages>
     <messages name="timer_cancel">
       <annotations name="timer_cancel" value="true"/>
       <parameters name="id">
-        <typeRef type="//@types.6"/>
+        <typeRef type="//@types.7"/>
       </parameters>
     </messages>
     <messages name="timer_timeout">
       <annotations name="timeout" value="true"/>
       <parameters name="id">
-        <typeRef type="//@types.6"/>
+        <typeRef type="//@types.7"/>
       </parameters>
     </messages>
     <messages name="sample_clock">
@@ -198,7 +218,7 @@
   </protocols>
   <protocols name="Timer"/>
   <configs name="JavaClientGateway">
-    <instances name="gw" type="//@types.0"/>
-    <connectors xsi:type="thingML:ExternalConnector" inst="//@configs.0/@instances.0" port="//@types.0/@ports.0" protocol="//@protocols.0"/>
+    <instances name="gw" type="//@types.1"/>
+    <connectors xsi:type="thingML:ExternalConnector" inst="//@configs.0/@instances.0" port="//@types.1/@ports.0" protocol="//@protocols.0"/>
   </configs>
 </thingML:ThingMLModel>

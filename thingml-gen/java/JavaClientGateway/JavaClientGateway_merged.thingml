@@ -1,14 +1,28 @@
-thing JavaClient includes LoggerMsgs {
+object MainFrame
+thing JavaClient includes LoggerMsgs @maven_dep "<dependency>
+	<groupId>org.thingml</groupId>
+	<artifactId>pressure-sensor-ui</artifactId>
+	<version>1.0-SNAPSHOT</version>
+</dependency>" @java_features "org.thingml.pressuresensor.ui.MainFrame ui;" {
 	provided port sensor {
 		receives pressure
 	}
 	statechart SC init READY {
-		on entry print "Java Client Ready. Waiting for sensor data..."
+		on entry do
+			print "Java Client Ready. Waiting for sensor data..."
+		'ui = new org.thingml.pressuresensor.ui.MainFrame();'
+		'java.awt.EventQueue.invokeLater(new Runnable() {
+            	public void run() {
+                	ui.setVisible(true);
+            	}
+        	});'
+		end
 		state READY {
 			internal
 			event o : sensor?pressure
 			action do
 				print "Pressure A=" + o.a + " B=" + o.b + "\n"
+				'ui.insertData(' & o.a & ', ' & o.b & ', ' & o.b - o.a & ');'
 			end
 		}
 	}
