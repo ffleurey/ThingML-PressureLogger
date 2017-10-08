@@ -1,0 +1,32 @@
+
+import "SharedMessages.thingml"
+
+thing JavaClient includes LoggerMsgs 
+{
+	
+	provided port sensor {
+		receives pressure
+	}
+	
+	statechart SC init READY {
+		
+		on entry print "Java Client Ready. Waiting for sensor data..."
+		
+		state READY {
+			internal event o:sensor?pressure action do
+				print "Pressure A=" + o.a + " B=" + o.b + "\n"
+			end
+		}
+	}
+} 
+
+
+protocol Serial @serializer "Binary"
+				@baudrate "115200"
+				@serial_path_to_device "/dev/ttyACM0";
+				
+
+configuration JavaClientGateway { 
+	instance gw : JavaClient
+	connector gw.sensor over Serial
+}

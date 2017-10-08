@@ -1,0 +1,7 @@
+import "_Timer.thingml"
+
+thing LoggerMsgs {
+	
+	message pressure(a : Long, b: Long) @code "20"
+	
+}
