@@ -6,7 +6,7 @@
 
 
 // BEGIN: Code from the c_header annotation ArduinoSensor
-#include <ifx_dps310.h>
+#include <Dps310.h>
 // END: Code from the c_header annotation ArduinoSensor
 
 // Definition of the instance struct:
@@ -178,8 +178,8 @@ byte fifo_dequeue() {
 
 // BEGIN: Code from the c_global annotation ArduinoSensor
 
-IFX_Dps310 ifxDps310_1 = IFX_Dps310();
-IFX_Dps310 ifxDps310_2 = IFX_Dps310();
+Dps310 ifxDps310_1 = Dps310();
+Dps310 ifxDps310_2 = Dps310();
 
 // END: Code from the c_global annotation ArduinoSensor
 
@@ -203,8 +203,8 @@ ifxDps310_1.begin(Wire, 0x76);
 void f_ArduinoSensor_sample_pressure(struct ArduinoSensor_Instance *_instance) {
 ;long p1;
 ;long p2;
-ifxDps310_1.measurePressureOnce(p1, 1);
-ifxDps310_2.measurePressureOnce(p2, 1);
+ifxDps310_1.measurePressureOnce(p1, 3);
+ifxDps310_2.measurePressureOnce(p2, 3);
 ArduinoSensor_send_gateway_pressure(_instance, p1, p2);
 }
 

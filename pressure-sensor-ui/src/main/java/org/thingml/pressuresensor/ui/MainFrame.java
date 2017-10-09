@@ -14,13 +14,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     
     GraphBuffer graph_buffer_pA = new GraphBuffer(500);
-    GraphPanel graph_panel_pA =  new LineGraphPanel(graph_buffer_pA, "Pressure A", 100350, 100400, 10, Color.GREEN);
+    GraphPanel graph_panel_pA =  new LineGraphPanel(graph_buffer_pA, "Pressure A", 100100, 100300, 10, Color.GREEN);
     
     GraphBuffer graph_buffer_pB = new GraphBuffer(500);
-    GraphPanel graph_panel_pB =  new LineGraphPanel(graph_buffer_pB, "Pressure B", 100350, 100400, 10, Color.GREEN);
+    GraphPanel graph_panel_pB =  new LineGraphPanel(graph_buffer_pB, "Pressure B", 100100, 100300, 10, Color.GREEN);
     
     GraphBuffer graph_buffer_pDiff = new GraphBuffer(500);
-    GraphPanel graph_panel_pDiff =  new LineGraphPanel(graph_buffer_pDiff, "Pressure Difference (B - A)", -20, 20, 5, Color.ORANGE);
+    GraphPanel graph_panel_pDiff =  new LineGraphPanel(graph_buffer_pDiff, "Pressure Difference (B - A)", -30, 30, 5, Color.ORANGE);
     
     /**
      * Creates new form MainFrame

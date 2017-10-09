@@ -1,6 +1,6 @@
-thing ArduinoSensor includes LoggerMsgs , TimerMsgs @c_header "#include <ifx_dps310.h>" @c_global "
-IFX_Dps310 ifxDps310_1 = IFX_Dps310();
-IFX_Dps310 ifxDps310_2 = IFX_Dps310();
+thing ArduinoSensor includes LoggerMsgs , TimerMsgs @c_header "#include <Dps310.h>" @c_global "
+Dps310 ifxDps310_1 = Dps310();
+Dps310 ifxDps310_2 = Dps310();
 " {
 	provided port gateway {
 		sends pressure
@@ -17,8 +17,8 @@ IFX_Dps310 ifxDps310_2 = IFX_Dps310();
 	function sample_pressure() do
 		var p1 : Long
 		var p2 : Long
-		'ifxDps310_1.measurePressureOnce(' & p1 & ', 1);'
-		'ifxDps310_2.measurePressureOnce(' & p2 & ', 1);'
+		'ifxDps310_1.measurePressureOnce(' & p1 & ', 3);'
+		'ifxDps310_2.measurePressureOnce(' & p2 & ', 3);'
 		gateway!pressure(p1, p2)
 	end
 	statechart Main init SAMPLING {

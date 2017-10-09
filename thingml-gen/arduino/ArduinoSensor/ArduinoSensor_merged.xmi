@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <thingML:ThingMLModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:thingML="http://www.thingml.org/xtext/ThingML">
   <types xsi:type="thingML:Thing" name="ArduinoSensor" includes="//@types.1 //@types.2">
-    <annotations name="c_header" value="#include &lt;ifx_dps310.h>"/>
-    <annotations name="c_global" value="&#xA;IFX_Dps310 ifxDps310_1 = IFX_Dps310();&#xA;IFX_Dps310 ifxDps310_2 = IFX_Dps310();&#xA;"/>
+    <annotations name="c_header" value="#include &lt;Dps310.h>"/>
+    <annotations name="c_global" value="&#xA;Dps310 ifxDps310_1 = Dps310();&#xA;Dps310 ifxDps310_2 = Dps310();&#xA;"/>
     <ports xsi:type="thingML:ProvidedPort" name="gateway" sends="//@types.1/@messages.0"/>
     <ports xsi:type="thingML:RequiredPort" name="clock" receives="//@types.2/@messages.3"/>
     <functions name="initialize_sensors">
@@ -20,11 +20,11 @@
         </actions>
         <actions xsi:type="thingML:ExternStatement" statement="ifxDps310_1.measurePressureOnce(">
           <segments xsi:type="thingML:PropertyReference" property="//@types.0/@functions.1/@body/@actions.0"/>
-          <segments xsi:type="thingML:ExternExpression" expression=", 1);"/>
+          <segments xsi:type="thingML:ExternExpression" expression=", 3);"/>
         </actions>
         <actions xsi:type="thingML:ExternStatement" statement="ifxDps310_2.measurePressureOnce(">
           <segments xsi:type="thingML:PropertyReference" property="//@types.0/@functions.1/@body/@actions.1"/>
-          <segments xsi:type="thingML:ExternExpression" expression=", 1);"/>
+          <segments xsi:type="thingML:ExternExpression" expression=", 3);"/>
         </actions>
         <actions xsi:type="thingML:SendAction" port="//@types.0/@ports.0" message="//@types.1/@messages.0">
           <parameters xsi:type="thingML:PropertyReference" property="//@types.0/@functions.1/@body/@actions.0"/>
