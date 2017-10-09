@@ -20,7 +20,7 @@ public class Main {
 public static JavaClient JavaClient_gw;
 public static void main(String args[]) {
 //Things
-JavaClient_gw = (JavaClient) new JavaClient("gw (JavaClient)").buildBehavior(null, null);
+JavaClient_gw = (JavaClient) new JavaClient("gw (JavaClient)", (int) (0)).buildBehavior(null, null);
 //Connecting internal ports...
 //Connectors
 //Init instances (queues, etc)

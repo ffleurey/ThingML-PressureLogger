@@ -6,6 +6,10 @@
     <annotations name="java_features" value="org.thingml.pressuresensor.ui.MainFrame ui;"/>
     <ports xsi:type="thingML:ProvidedPort" name="sensor" receives="//@types.2/@messages.0"/>
     <behaviour name="SC" initial="//@types.1/@behaviour.0/@substate.0">
+      <properties name="bias">
+        <typeRef type="//@types.13"/>
+        <init xsi:type="thingML:IntegerLiteral"/>
+      </properties>
       <entry xsi:type="thingML:ActionBlock">
         <actions xsi:type="thingML:PrintAction">
           <msg xsi:type="thingML:StringLiteral" stringValue="Java Client Ready. Waiting for sensor data..."/>
@@ -32,15 +36,40 @@
                 <rhs xsi:type="thingML:StringLiteral" stringValue="\n"/>
               </msg>
             </actions>
+            <actions xsi:type="thingML:LocalVariable" name="diff">
+              <typeRef type="//@types.13"/>
+              <init xsi:type="thingML:MinusExpression">
+                <lhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.1"/>
+                <rhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.0"/>
+              </init>
+            </actions>
+            <actions xsi:type="thingML:VariableAssignment" property="//@types.1/@behaviour.0/@properties.0">
+              <expression xsi:type="thingML:PlusExpression">
+                <lhs xsi:type="thingML:MinusExpression">
+                  <lhs xsi:type="thingML:PropertyReference" property="//@types.1/@behaviour.0/@properties.0"/>
+                  <rhs xsi:type="thingML:DivExpression">
+                    <lhs xsi:type="thingML:PropertyReference" property="//@types.1/@behaviour.0/@properties.0"/>
+                    <rhs xsi:type="thingML:IntegerLiteral" intValue="100"/>
+                  </rhs>
+                </lhs>
+                <rhs xsi:type="thingML:PropertyReference" property="//@types.1/@behaviour.0/@substate.0/@internal.0/@action/@actions.1"/>
+              </expression>
+            </actions>
+            <actions xsi:type="thingML:VariableAssignment" property="//@types.1/@behaviour.0/@substate.0/@internal.0/@action/@actions.1">
+              <expression xsi:type="thingML:MinusExpression">
+                <lhs xsi:type="thingML:PropertyReference" property="//@types.1/@behaviour.0/@substate.0/@internal.0/@action/@actions.1"/>
+                <rhs xsi:type="thingML:DivExpression">
+                  <lhs xsi:type="thingML:PropertyReference" property="//@types.1/@behaviour.0/@properties.0"/>
+                  <rhs xsi:type="thingML:IntegerLiteral" intValue="100"/>
+                </rhs>
+              </expression>
+            </actions>
             <actions xsi:type="thingML:ExternStatement" statement="ui.insertData(">
               <segments xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.0"/>
               <segments xsi:type="thingML:ExternExpression" expression=", ">
                 <segments xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.1"/>
                 <segments xsi:type="thingML:ExternExpression" expression=", ">
-                  <segments xsi:type="thingML:MinusExpression">
-                    <lhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.1"/>
-                    <rhs xsi:type="thingML:EventReference" receiveMsg="//@types.1/@behaviour.0/@substate.0/@internal.0/@event.0" parameter="//@types.2/@messages.0/@parameters.0"/>
-                  </segments>
+                  <segments xsi:type="thingML:PropertyReference" property="//@types.1/@behaviour.0/@substate.0/@internal.0/@action/@actions.1"/>
                   <segments xsi:type="thingML:ExternExpression" expression=");"/>
                 </segments>
               </segments>

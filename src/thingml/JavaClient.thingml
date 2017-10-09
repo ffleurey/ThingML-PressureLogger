@@ -18,6 +18,8 @@ thing JavaClient includes LoggerMsgs
 	
 	statechart SC init READY {
 		
+		property bias : Long = 0
+		
 		on entry do 
 			print "Java Client Ready. Waiting for sensor data..."
 			'ui = new org.thingml.pressuresensor.ui.MainFrame();'
@@ -29,10 +31,15 @@ thing JavaClient includes LoggerMsgs
 			
 		end
 		
+		
+		
 		state READY {
 			internal event o:sensor?pressure action do
 				print "Pressure A=" + o.a + " B=" + o.b + "\n"
-				'ui.insertData('&o.a&', '&o.b&', '&o.b-o.a&');'
+				var diff : Long = o.b-o.a
+				bias = bias - bias/100 + diff
+				diff = diff - bias/100
+				'ui.insertData('&o.a&', '&o.b&', '&diff&');'
 			end
 		}
 	}

@@ -42,6 +42,8 @@ receive(_msg);
 }
 
 //Attributes
+private int JavaClient_SC_bias_var;
+private int debug_JavaClient_SC_bias_var;
 //Ports
 private Port sensor_port;
 //Message types
@@ -49,31 +51,55 @@ protected final PressureMessageType pressureType = new PressureMessageType();
 //Empty Constructor
 public JavaClient() {
 super();
+JavaClient_SC_bias_var = (int) 0;
 }
 
 //Constructor (all attributes)
-public JavaClient(String name) {
+public JavaClient(String name, final int JavaClient_SC_bias_var) {
 super(name);
+this.JavaClient_SC_bias_var = JavaClient_SC_bias_var;
 }
 
 //Getters and Setters for non readonly/final attributes
+public int getJavaClient_SC_bias_var() {
+return JavaClient_SC_bias_var;
+}
+
+public void setJavaClient_SC_bias_var(int JavaClient_SC_bias_var) {
+this.JavaClient_SC_bias_var = JavaClient_SC_bias_var;
+}
+
 //Getters for Ports
 public Port getSensor_port() {
 return sensor_port;
 }
 private CompositeState buildJavaClient_SC(){
 final AtomicState state_JavaClient_SC_READY = new AtomicState("READY");
-Handler h1474887301 = new Handler();
-h1474887301.from(state_JavaClient_SC_READY);
-h1474887301.event(pressureType);
-h1474887301.port(sensor_port);
-h1474887301.action((Event e)->{
+Handler h1046535926 = new Handler();
+h1046535926.from(state_JavaClient_SC_READY);
+h1046535926.event(pressureType);
+h1046535926.port(sensor_port);
+h1046535926.action((Event e)->{
 final PressureMessageType.PressureMessage pressure = (PressureMessageType.PressureMessage) e;
 System.out.print("Pressure A=" + pressure.a + " B=" + pressure.b + "\n");
-ui.insertData(pressure.a, pressure.b, pressure.b - pressure.a);
+int diff_var = (int) (pressure.b - pressure.a);
+
+JavaClient_SC_bias_var = (int) (getJavaClient_SC_bias_var() - getJavaClient_SC_bias_var() / 100 + diff_var);
+diff_var = (int) (diff_var - getJavaClient_SC_bias_var() / 100);
+ui.insertData(pressure.a, pressure.b, diff_var);
 });
 
-final CompositeState state_JavaClient_SC = new CompositeState("SC");
+final CompositeState state_JavaClient_SC = new CompositeState("SC"){
+private int JavaClient_SC_bias_var = 0;
+public int getJavaClient_SC_bias_var() {
+return JavaClient_SC_bias_var;
+}
+
+public void setJavaClient_SC_bias_var(int JavaClient_SC_bias_var) {
+this.JavaClient_SC_bias_var = JavaClient_SC_bias_var;
+}
+
+};
 state_JavaClient_SC.onEntry(()->{
 System.out.print("Java Client Ready. Waiting for sensor data...");
 ui = new org.thingml.pressuresensor.ui.MainFrame();
