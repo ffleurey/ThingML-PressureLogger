@@ -1,10 +1,6 @@
 # Testing DPS310 Pressure sensors
 
-For this test we are using two DPS310 pressure sensors. Both sensors are connected to the I2C bus of an arduino.
-
-We are intereted in the variations in altitude between the two sensors.
-
-The pressure is logged at around 10Hz and the pressure difference between the two sensors is calculated and low pass filtered. 
+For this test we are using two DPS310 pressure sensors. Both sensors are connected to the I2C bus of an arduino. The pressure is logged at around 10Hz and the pressure difference between the two sensors is calculated and crudely high pass filtered. We are intereted in the variations in altitude between the two sensors.
 
 ![Graphs](https://raw.githubusercontent.com/ffleurey/ThingML-PressureLogger/master/doc/Curves.png)
 
