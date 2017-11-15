@@ -6,6 +6,7 @@ We are intereted in the variations in altitude between the two sensors.
 
 The pressure is logged at around 10Hz and the pressure difference between the two sensors is calculated and low pass filtered. 
 
+![Graphs](https://raw.githubusercontent.com/ffleurey/ThingML-PressureLogger/master/doc/Curves.png)
 
 * **Case A** corresponds to a variation in pressure in the room (opening the window). Both sensrors measure the same variation in pressure so the difference (at the bottom) remains 0.
  * **Case B** coresponds to moving sensor B about 1 meter up and back. The decrease in pressure is clearly visible. Sensor A is not affected and the difference reflect accuraly the change in relative altitude between the 2 sensors.
