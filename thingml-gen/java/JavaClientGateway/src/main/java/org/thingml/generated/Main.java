@@ -7,8 +7,8 @@
 
 package org.thingml.generated;
 
-import org.thingml.java.*;
-import org.thingml.java.ext.*;
+import no.sintef.jasm.*;
+import no.sintef.jasm.ext.*;
 
 import org.thingml.generated.api.*;
 import org.thingml.generated.messages.*;

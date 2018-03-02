@@ -30,8 +30,8 @@ void register_ArduinoSensor_send_gateway_pressure_listener(void (*_listener)(str
 void register_external_ArduinoSensor_send_gateway_pressure_listener(void (*_listener)(struct ArduinoSensor_Instance *, long, long));
 
 // Definition of the states:
-#define ARDUINOSENSOR_MAIN_STATE 0
-#define ARDUINOSENSOR_MAIN_SAMPLING_STATE 1
+#define ARDUINOSENSOR_MAIN_SAMPLING_STATE 0
+#define ARDUINOSENSOR_MAIN_STATE 1
 
 
 /*****************************************************/
@@ -203,6 +203,9 @@ ifxDps310_1.begin(Wire, 0x76);
 void f_ArduinoSensor_sample_pressure(struct ArduinoSensor_Instance *_instance) {
 ;long p1;
 ;long p2;
+int32_t temperature;
+		  ifxDps310_1.measureTempOnce(temperature, 3);
+ifxDps310_2.measureTempOnce(temperature, 3);
 ifxDps310_1.measurePressureOnce(p1, 3);
 ifxDps310_2.measurePressureOnce(p2, 3);
 ArduinoSensor_send_gateway_pressure(_instance, p1, p2);

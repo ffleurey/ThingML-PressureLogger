@@ -7,8 +7,8 @@
 
 package org.thingml.generated;
 
-import org.thingml.java.*;
-import org.thingml.java.ext.*;
+import no.sintef.jasm.*;
+import no.sintef.jasm.ext.*;
 
 import org.thingml.generated.api.*;
 import org.thingml.generated.messages.*;
@@ -75,11 +75,11 @@ return sensor_port;
 }
 private CompositeState buildJavaClient_SC(){
 final AtomicState state_JavaClient_SC_READY = new AtomicState("READY");
-Handler h1046535926 = new Handler();
-h1046535926.from(state_JavaClient_SC_READY);
-h1046535926.event(pressureType);
-h1046535926.port(sensor_port);
-h1046535926.action((Event e)->{
+Handler h1805398191 = new Handler();
+h1805398191.from(state_JavaClient_SC_READY);
+h1805398191.event(pressureType);
+h1805398191.port(sensor_port);
+h1805398191.action((Event e)->{
 final PressureMessageType.PressureMessage pressure = (PressureMessageType.PressureMessage) e;
 System.out.print("Pressure A=" + pressure.a + " B=" + pressure.b + "\n");
 int diff_var = (int) (pressure.b - pressure.a);

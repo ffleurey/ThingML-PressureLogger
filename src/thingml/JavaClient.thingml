@@ -22,12 +22,12 @@ thing JavaClient includes LoggerMsgs
 		
 		on entry do 
 			print "Java Client Ready. Waiting for sensor data..."
-			'ui = new org.thingml.pressuresensor.ui.MainFrame();'
-			'java.awt.EventQueue.invokeLater(new Runnable() {
+			`ui = new org.thingml.pressuresensor.ui.MainFrame();`
+			`java.awt.EventQueue.invokeLater(new Runnable() {
             	public void run() {
                 	ui.setVisible(true);
             	}
-        	});'
+        	});`
 			
 		end
 		
@@ -39,7 +39,7 @@ thing JavaClient includes LoggerMsgs
 				var diff : Long = o.b-o.a
 				bias = bias - bias/100 + diff
 				diff = diff - bias/100
-				'ui.insertData('&o.a&', '&o.b&', '&diff&');'
+				`ui.insertData(`&o.a&`, `&o.b&`, `&diff&`);`
 			end
 		}
 	}

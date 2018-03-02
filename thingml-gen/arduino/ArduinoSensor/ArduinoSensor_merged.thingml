@@ -9,16 +9,19 @@ Dps310 ifxDps310_2 = Dps310();
 		receives sample_clock
 	}
 	function initialize_sensors() do
-	'ifxDps310_1.begin(Wire, 0x76);
+	`ifxDps310_1.begin(Wire, 0x76);
   		 ifxDps310_2.begin(Wire, 0x77);
   		 ifxDps310_1.correctTemp();
-  		 ifxDps310_2.correctTemp();'
+  		 ifxDps310_2.correctTemp();`
 	end
 	function sample_pressure() do
 		var p1 : Long
 		var p2 : Long
-		'ifxDps310_1.measurePressureOnce(' & p1 & ', 3);'
-		'ifxDps310_2.measurePressureOnce(' & p2 & ', 3);'
+	`int32_t temperature;
+		  ifxDps310_1.measureTempOnce(temperature, 3);`
+	`ifxDps310_2.measureTempOnce(temperature, 3);`
+		`ifxDps310_1.measurePressureOnce(` & p1 & `, 3);`
+		`ifxDps310_2.measurePressureOnce(` & p2 & `, 3);`
 		gateway!pressure(p1, p2)
 	end
 	statechart Main init SAMPLING {

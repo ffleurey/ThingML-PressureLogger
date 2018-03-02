@@ -1,7 +1,7 @@
 package org.thingml.generated.network;
 
 import org.thingml.generated.messages.*;
-import org.thingml.java.ext.Event;
+import no.sintef.jasm.ext.Event;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 public class SerialBinaryProtocol implements BinaryJava {
