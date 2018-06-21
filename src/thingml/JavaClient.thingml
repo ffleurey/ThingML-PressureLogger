@@ -48,7 +48,8 @@ thing JavaClient includes LoggerMsgs
 
 protocol Serial @serializer "Binary"
 				@baudrate "115200"
-				@serial_path_to_device "/dev/ttyACM0";
+				@serial_path_to_device "COM11"
+				@port "COM11";
 				
 
 configuration JavaClientGateway { 
